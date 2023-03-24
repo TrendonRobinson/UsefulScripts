@@ -1,18 +1,32 @@
-local function valueInstanceFromType(value)
+local function valueInstanceFromType(value, key)
     if type(value) == "string" then
-        return Instance.new("StringValue")
+        local stringValue = Instance.new("StringValue")
+        stringValue.Name = key
+        return stringValue
     elseif type(value) == "boolean" then
-        return Instance.new("BoolValue")
+        local boolValue = Instance.new("BoolValue")
+        boolValue.Name = key
+        return boolValue
     elseif type(value) == "number" then
-        return Instance.new("NumberValue")
+        local numberValue = Instance.new("NumberValue")
+        numberValue.Name = key
+        return numberValue
     elseif typeof(value) == "Color3" then
-        return Instance.new("Color3Value")
+        local color3Value = Instance.new("Color3Value")
+        color3Value.Name = key
+        return color3Value
     elseif typeof(value) == "Instance" then
-        return Instance.new("ObjectValue")
+        local objectValue = Instance.new("ObjectValue")
+        objectValue.Name = key
+        return objectValue
     elseif typeof(value) == "CFrame" then
-        return Instance.new("CFrameValue")
+        local cframeValue = Instance.new("CFrameValue")
+        cframeValue.Name = key
+        return cframeValue
     elseif typeof(value) == "Vector3" then
-        return Instance.new("Vector3Value")
+        local vector3Value = Instance.new("Vector3Value")
+        vector3Value.Name = key
+        return vector3Value
     else
         return nil
     end
@@ -24,9 +38,8 @@ local function convertToConfiguration(obj, parent)
     config.Parent = parent or workspace
 
     for key, value in pairs(obj) do
-        local valueInstance = valueInstanceFromType(value)
+        local valueInstance = valueInstanceFromType(value, key)
         if valueInstance then
-            valueInstance.Name = key
             valueInstance.Value = value
             valueInstance.Parent = config
         elseif type(value) == "table" then
